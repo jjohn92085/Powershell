@@ -1,17 +1,46 @@
-
 # this is a tool to check if specific services are running on startup and turn them off as needed
 
 # run as admin
 
-if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) { Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`"" -Verb RunAs; exit }
+(!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) { Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`"" -Verb RunAs; exit }
 
-$geolocation = (Get-Service -Name "Geolocation Service").status
+# check if Dental Intelligence is running and stop it
 
-#check if service is running and stop it
+$DentalIntelligence = (Get-Service -Name "Dental Intelligence").Status
 
-if ($geolocation -eq "Running" -or "StartPending" -or "ContinuePending" ) {
+if ($DentalIntelligence -eq "Running" -or "StartPending" -or "ContinuePending") {
 
-    Stop-Service -Name "Geolocation Service"
+    Stop-Service -Name 'DentalIntelligence'
+
+}
+
+else {
+
+    Write-Host "The Dental Intelligence service is stopped"
+
+}
+
+# check if ModentoBridge is running and stop it
+
+$Modento = (Get-Service -Name "ModentoBridge").status
+
+if ($Modento -eq "Running" -or "StartPending" -or "ContinuePending") {
+
+    Stop-Service -Name "ModentoBridge"
+}
+
+else {
+
+    Write-Host "The Modento service is stopped"
+}
+
+$NexHealth = (Get-Service -Name "NexHealth").status
+
+# check if NexHealth is running and stop it
+
+if ($NexHealth -eq "Running" -or "StartPending" -or "ContinuePending" ) {
+
+    Stop-Service -Name "NexHealth"
 
 } 
 
@@ -19,7 +48,8 @@ if ($geolocation -eq "Running" -or "StartPending" -or "ContinuePending" ) {
 
 else {
 
-    Write-Host "The Geolocation service is stopped"
+    Write-Host "The NexHealth service is stopped"
 }
 
-#another service check
+# 
+
