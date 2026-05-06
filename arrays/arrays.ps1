@@ -18,6 +18,7 @@ $newPerson[0,2]
 # you can use multiple indices for many items
 
 $anotherPerson = $newPerson[1,2,3]
+$anotherPerson
 
 # ... prints everything in between
 
@@ -37,6 +38,26 @@ $newPerson[-2]
 
 $newPerson.ForEach({ $PSItem.Length })
 
+# arrays can be added also called concantenation
 
+$oldPerson + $newPerson
+
+# you can times arrays to copy them
+
+$oldPerson * 3
+
+# you can add new items to arrays
+
+$newPerson += "Smith"
+
+# you can multiply array values as well
+
+$olderPerson = $newPerson[0] *= 3
+$olderPerson
+
+# containment operators are -contains, -notcontains, -in, and -notin check if items exists in array
+
+$oldestPerson = @(41, "Mark", "Brown")
+$oldestPerson -contains 41
 
 
